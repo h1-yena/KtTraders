@@ -45,3 +45,6 @@ bin/
 .DS_Store
 /logs/debug.log
 /logs/main.log
+
+### secrets ###
+token.txt
