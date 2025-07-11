@@ -1,4 +1,4 @@
-package org.example
+package tanuki.ktraders.main.structure
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonIgnoreUnknownKeys
