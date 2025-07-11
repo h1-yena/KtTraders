@@ -4,4 +4,6 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class Procurement
+data class Procurement(
+    val placeholder: String
+)

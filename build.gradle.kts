@@ -8,7 +8,7 @@ plugins {
 
 }
 application {
-    mainClass = "org.example.MainKt"
+    mainClass = "tanuki.ktraders.main.behavior.MainKt"
 }
 
 java {

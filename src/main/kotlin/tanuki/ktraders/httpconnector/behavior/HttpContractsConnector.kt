@@ -1,6 +1,7 @@
 package tanuki.ktraders.httpconnector.behavior
 
 import tanuki.ktraders.main.structure.Contract
+import tanuki.ktraders.main.structure.PhysicalQuantity
 
 interface HttpContractsConnector {
     fun listContracts(): Set<Contract>
