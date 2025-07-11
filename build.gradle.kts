@@ -33,7 +33,6 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     implementation("io.ktor:ktor-client-core:${ktor_version}")
     implementation("io.ktor:ktor-client-cio:${ktor_version}")
@@ -42,6 +41,8 @@ dependencies {
 
     // Please no more vulnerabilities! D:
     implementation("org.apache.logging.log4j:log4j-slf4j2-impl:2.25.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.0")
 }
 
 tasks.test {
