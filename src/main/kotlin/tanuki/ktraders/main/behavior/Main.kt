@@ -1,28 +1,38 @@
 package tanuki.ktraders.main.behavior
 
 import io.ktor.client.*
-import io.ktor.client.call.*
+import io.ktor.client.call.body
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import tanuki.ktraders.main.structure.SpaceTradersInfo
 import java.io.File
+
+private var secret: String = ""
 
 suspend fun main() {
 
-    val secretsFile: File = File("token.txt")
+    secret = loadSecret()
 
-    if (secretsFile.isFile) println("File for secrets exists at path: " + secretsFile.absolutePath)
 
-    val fileSecret = secretsFile.inputStream().readBytes().toString(Charsets.UTF_8)
+    val client = initializeHttpClient()
+    val pretty = Json { prettyPrint = true }
 
-    println(secretsFile.inputStream().readNBytes(2).toString(Charsets.UTF_8))
+    val response: HttpResponse = client.request("https://api.spacetraders.io/v2/my/ships") {
 
-    println("The following secret was contained in that file: $fileSecret")
+        method = HttpMethod.Get
+        headers.append("Content-Type", "application/json")
+        headers.append("Authorization", "Bearer $secret")
 
+    }
+
+    println(response.body<String>())
+}
+
+private fun initializeHttpClient(): HttpClient {
     val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             json(Json {
@@ -31,12 +41,11 @@ suspend fun main() {
             })
         }
     }
-    val pretty = Json { prettyPrint = true }
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2")
+    return client
+}
 
-
-    val spaceTraderInfo: SpaceTradersInfo = response.body()
-
-    println(pretty.encodeToString(spaceTraderInfo))
+private fun loadSecret(): String {
+    val secretsFile: File = File("token.txt")
+    return secretsFile.inputStream().readBytes().toString(Charsets.UTF_8)
 
 }
